@@ -1,0 +1,24 @@
+plugins {
+    id 'com.github.node-gradle.node' version '7.1.0'
+}
+
+node {
+    version = '20.10.0'
+    npmVersion = '10.2.4'
+    download = true
+}
+
+task build(type: NpmTask) {
+    description = 'Build the React SPA for production'
+    group = 'build'
+    dependsOn npmInstall
+    args = ['run', 'build']
+}
+
+task clean(type: Delete) {
+    delete 'dist', 'node_modules'
+}
+
+task assemble(dependsOn: build) {
+    group = 'build'
+}
